@@ -1,0 +1,6 @@
+require('plugconfig.nvim-lspconfig')
+require('plugconfig.nvim-lightbulb')
+require('plugconfig.nvim-treesitter')
+require('plugconfig.nvim-web-devicons')
+require('plugconfig.telescope')
+require('plugconfig.tokyonight')
