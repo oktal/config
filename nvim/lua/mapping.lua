@@ -7,11 +7,7 @@ local function map(mode, lhs, rhs, opts)
     vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
--- Map C-p to Telescope find_files and C-b to Telescope buffers
-cmd 'nnoremap <C-p> <cmd>Telescope find_files<CR>'
-cmd 'nnoremap <C-b> <cmd>Telescope buffers<CR>'
-
--- Map C-n to NERDTreeToggle
+-- Map C-n to NERDTree
 cmd 'nnoremap <C-n> <cmd>NERDTreeToggle<CR>'
 
 -- Navigation

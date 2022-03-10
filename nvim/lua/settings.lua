@@ -9,6 +9,9 @@ local function opt(scope, key, value)
     if scope ~= 'o' then scopes['o'][key] = value end
 end
 
+-- Map leader to space
+g.mapleader = ' '
+
 -- Syntax
 cmd 'syntax enable'
 cmd 'filetype plugin on'
@@ -27,6 +30,6 @@ opt('o', 'completeopt', 'menuone,noinsert,noselect')
 opt('w', 'relativenumber', true)
 
 -- Setup color scheme
-g.material_style = 'deep ocean'
+-- g.material_style = 'deep ocean'
 -- require('colorbuddy').colorscheme('material')
-vim.cmd('colorscheme tokyonight')
+require('nightfox').load('duskfox')

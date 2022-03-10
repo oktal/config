@@ -6,7 +6,7 @@ require('telescope').setup{
     defaults = {
         color_devicons = true,
         prompt_position = 'bottom',
-        file_ignore_patterns = { 'build.*/.*' },
+        file_ignore_patterns = { 'build.*/.*', '.clang/*' },
         set_env = { ['COLORTERM'] = 'truecolor' },
         file_previewer = previewers.vim_buffer_cat.new,
         grep_previewer = previewers.vim_buffer_vimgrep.new,
@@ -38,6 +38,7 @@ map_telescope('gh', "help_tags")
 map_telescope('<leader>gm', "man_pages")
 map_telescope('<leader>gs', "git_status", rowselect_opts)
 map_telescope('<leader>la', "lsp_code_actions")
+map_telescope('<leader>fu', "lsp_references")
 map_telescope('<leader>lb', "buffers")
 map_telescope('<leader>lk', "keymaps")
 map_telescope('<leader>lm', "marks")
