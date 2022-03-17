@@ -32,4 +32,5 @@ opt('w', 'relativenumber', true)
 -- Setup color scheme
 -- g.material_style = 'deep ocean'
 -- require('colorbuddy').colorscheme('material')
-require('nightfox').load('duskfox')
+
+cmd('colorscheme nightfox')

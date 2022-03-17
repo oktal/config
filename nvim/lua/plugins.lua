@@ -66,4 +66,10 @@ return require('packer').startup(function()
       'nvim-lualine/lualine.nvim',
       requires = { 'kyazdani42/nvim-web-devicons', opt = true }
     }
+
+    -- Motions
+    use {
+      'phaazon/hop.nvim',
+      branch = 'v1'
+    }
 end)

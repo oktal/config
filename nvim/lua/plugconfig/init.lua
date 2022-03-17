@@ -1,3 +1,4 @@
+require('plugconfig.hop')
 require('plugconfig.nvim-lspconfig')
 require('plugconfig.nvim-cmp')
 require('plugconfig.nvim-treesitter')
