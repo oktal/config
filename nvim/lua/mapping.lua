@@ -8,7 +8,10 @@ local function map(mode, lhs, rhs, opts)
 end
 
 -- Map C-n to NERDTree
-cmd 'nnoremap <C-n> <cmd>NERDTreeToggle<CR>'
+-- cmd 'nnoremap <C-n> <cmd>NERDTreeToggle<CR>'
+
+-- Map C-n to Neo-tree
+cmd 'nnoremap <C-n> <cmd>Neotree focus filesystem toggle<CR>'
 
 -- Navigation
 cmd 'nnoremap <C-h> 5h'

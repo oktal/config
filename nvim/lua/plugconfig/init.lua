@@ -1,5 +1,6 @@
 require('plugconfig.hop')
 require('plugconfig.nvim-lspconfig')
+require('plugconfig.nvim-lsp-installer')
 require('plugconfig.nvim-cmp')
 require('plugconfig.nvim-treesitter')
 -- require('plugconfig.nvim-web-devicons')
