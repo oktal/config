@@ -16,6 +16,7 @@ return require('packer').startup(function()
     use { 'nvim-lua/lsp_extensions.nvim' }
     use { 'p00f/clangd_extensions.nvim' }
     use { 'williamboman/nvim-lsp-installer' }
+    use { 'Hoffs/omnisharp-extended-lsp.nvim' }
 
     -- autocompletion
     use 'hrsh7th/nvim-cmp'

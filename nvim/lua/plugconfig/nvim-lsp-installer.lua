@@ -36,6 +36,14 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 lsp_installer.on_server_ready(function(server)
     local opts = { on_attach = on_attach, capabilities = capabilities }
 
+    -- Setup custom textDocument/definition for omnisharp that properly handles URI with $metadata$ when decompiling external
+    -- assembly
+    if server.name == "omnisharp" then
+        opts.handlers = {
+            ["textDocument/definition"] = require('omnisharp_extended').handler,
+        }
+    end
+
     -- (optional) Customize the options passed to the server
     -- if server.name == "tsserver" then
     --     opts.root_dir = function() ... end
