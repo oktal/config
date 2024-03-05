@@ -1,0 +1,6 @@
+[language-server]
+omnisharp = { command = "/home/octal/code/lsp/omnisharp/OmniSharp", args = [ "--languageserver" ] }
+
+[[language]]
+name = "c-sharp"
+language-servers = [ "csharp-ls" ]
