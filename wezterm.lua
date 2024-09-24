@@ -13,6 +13,7 @@ config.color_scheme = "Belafonte Night (Gogh)"
 config.window_close_confirmation = "AlwaysPrompt"
 config.scrollback_lines = 3000
 config.default_workspace = "main"
+config.font = wezterm.font("JetBrains Mono")
 
 -- Dim inactive panes
 config.inactive_pane_hsb = {
@@ -58,7 +59,7 @@ config.keys = {
 			description = wezterm.format({
 				{ Attribute = { Intensity = "Bold" } },
 				{ Foreground = { AnsiColor = "Fuchsia" } },
-				{ Text = "Renaming Tab Title...:" },
+				{ Text = "Enter new title for tab" },
 			}),
 			action = wezterm.action_callback(function(window, pane, line)
 				if line then
@@ -99,6 +100,25 @@ config.keys = {
 			end),
 		}),
 	},
+	{
+		key = "R",
+		mods = "LEADER",
+		action = act.PromptInputLine({
+			description = wezterm.format({
+				{ Attribute = { Intensity = "Bold" } },
+				{ Foreground = { AnsiColor = "Fuchsia" } },
+				{ Text = "Enter new name for workspace" },
+			}),
+			action = wezterm.action_callback(function(window, pane, line)
+				-- line will be `nil` if they hit escape without entering anything
+				-- An empty string if they just hit enter
+				-- Or the actual line of text they wrote
+				if line then
+					wezterm.mux.rename_workspace(wezterm.mux.get_active_workspace(), line)
+				end
+			end),
+		}),
+	},
 	{ key = "[", mods = "LEADER", action = act.SwitchWorkspaceRelative(1) },
 	{ key = "]", mods = "LEADER", action = act.SwitchWorkspaceRelative(-1) },
 }
@@ -131,42 +151,10 @@ config.key_tables = {
 }
 
 -- Tab bar
-config.use_fancy_tab_bar = true
+config.use_fancy_tab_bar = false
 config.status_update_interval = 1000
 config.tab_bar_at_bottom = true
 
-wezterm.plugin.require("https://github.com/nekowinston/wezterm-bar").apply_to_config(config, {
-	position = "bottom",
-	max_width = 32,
-	dividers = "slant_left", -- or "slant_left", "arrows", "rounded", false
-	indicator = {
-		leader = {
-			enabled = true,
-			off = " ",
-			on = " ",
-		},
-		mode = {
-			enabled = true,
-			names = {
-				resize_mode = "RESIZE",
-				copy_mode = "VISUAL",
-				search_mode = "SEARCH",
-			},
-		},
-	},
-	tabs = {
-		numerals = "arabic", -- or "roman"
-		pane_count = "superscript", -- or "subscript", false
-		brackets = {
-			active = { "", ":" },
-			inactive = { "", ":" },
-		},
-	},
-	clock = { -- note that this overrides the whole set_right_status
-		enabled = true,
-		format = "%H:%M", -- use https://wezfurlong.org/wezterm/config/lua/wezterm.time/Time/format.html
-	},
-})
 wezterm.on("update-right-status", function(window, pane)
 	-- Workspace name
 	local stat = window:active_workspace()
