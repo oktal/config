@@ -74,7 +74,33 @@ config.keys = {
 	{ key = "}", mods = "LEADER|SHIFT", action = act.MoveTabRelative(1) },
 
 	-- Lastly, workspace
-	{ key = "w", mods = "LEADER", action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
+	-- Prompt for a name to use for a new workspace and switch to it.
+	{
+		key = "W",
+		mods = "LEADER",
+		action = act.PromptInputLine({
+			description = wezterm.format({
+				{ Attribute = { Intensity = "Bold" } },
+				{ Foreground = { AnsiColor = "Fuchsia" } },
+				{ Text = "Enter name for new workspace" },
+			}),
+			action = wezterm.action_callback(function(window, pane, line)
+				-- line will be `nil` if they hit escape without entering anything
+				-- An empty string if they just hit enter
+				-- Or the actual line of text they wrote
+				if line then
+					window:perform_action(
+						act.SwitchToWorkspace({
+							name = line,
+						}),
+						pane
+					)
+				end
+			end),
+		}),
+	},
+	{ key = "[", mods = "LEADER", action = act.SwitchWorkspaceRelative(1) },
+	{ key = "]", mods = "LEADER", action = act.SwitchWorkspaceRelative(-1) },
 }
 -- I can use the tab navigator (LDR t), but I also want to quickly navigate tabs with index
 for i = 1, 9 do
@@ -109,29 +135,42 @@ config.use_fancy_tab_bar = true
 config.status_update_interval = 1000
 config.tab_bar_at_bottom = true
 
-local bar = wezterm.plugin.require("https://github.com/adriankarlen/bar.wezterm")
-bar.apply_to_config(config, {
-	modules = {
-		spotify = {
-			enabled = false,
+wezterm.plugin.require("https://github.com/nekowinston/wezterm-bar").apply_to_config(config, {
+	position = "bottom",
+	max_width = 32,
+	dividers = "slant_left", -- or "slant_left", "arrows", "rounded", false
+	indicator = {
+		leader = {
+			enabled = true,
+			off = " ",
+			on = " ",
+		},
+		mode = {
+			enabled = true,
+			names = {
+				resize_mode = "RESIZE",
+				copy_mode = "VISUAL",
+				search_mode = "SEARCH",
+			},
 		},
 	},
+	tabs = {
+		numerals = "arabic", -- or "roman"
+		pane_count = "superscript", -- or "subscript", false
+		brackets = {
+			active = { "", ":" },
+			inactive = { "", ":" },
+		},
+	},
+	clock = { -- note that this overrides the whole set_right_status
+		enabled = true,
+		format = "%H:%M", -- use https://wezfurlong.org/wezterm/config/lua/wezterm.time/Time/format.html
+	},
 })
-
-wezterm.on("update-status", function(window, pane)
+wezterm.on("update-right-status", function(window, pane)
 	-- Workspace name
 	local stat = window:active_workspace()
 	local stat_color = "#f7768e"
-	-- It's a little silly to have workspace name all the time
-	-- Utilize this to display LDR or current key table name
-	if window:active_key_table() then
-		stat = window:active_key_table()
-		stat_color = "#7dcfff"
-	end
-	if window:leader_is_active() then
-		stat = "LDR"
-		stat_color = "#bb9af7"
-	end
 
 	local basename = function(s)
 		-- Nothing a little regex can't fix
