@@ -121,6 +121,10 @@ config.keys = {
 	},
 	{ key = "[", mods = "LEADER", action = act.SwitchWorkspaceRelative(1) },
 	{ key = "]", mods = "LEADER", action = act.SwitchWorkspaceRelative(-1) },
+
+	-- Misc keys
+	{ key = "L", mods = "LEADER", action = act.ShowLauncher },
+	{ key = "w", mods = "LEADER", action = act.ShowLauncherArgs({ flags = "WORKSPACES" }) },
 }
 -- I can use the tab navigator (LDR t), but I also want to quickly navigate tabs with index
 for i = 1, 9 do
