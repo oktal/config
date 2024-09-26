@@ -9,3 +9,9 @@ vim.keymap.set("n", "<C-l>", "5l")
 -- Map <C-[jk]> to scroll page and center the line
 vim.keymap.set("n", "<C-j>", "<C-d>zz")
 vim.keymap.set("n", "<C-k>", "<C-u>zz")
+
+-- Open parent directory in current window
+vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+
+-- Open parent directory in floating window
+vim.keymap.set("n", "<leader>-", require("oil").toggle_float, { desc = "Open parent directory in floating window" })
